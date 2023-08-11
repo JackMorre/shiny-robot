@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form and Tables - Forms</title>
+</head>
+<body>
+    <header>
+        <h1>Forms!</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html">forms</a>
+                </li>
+                <li>
+                    <a href="tables.html">tabled</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Forms</h2>
+            <article>
+                <h3>First Form</h3>
+                <form action="" id="form">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name" placeholder="name">
+                    <label for="email">email:</label>
+                    <input type="text" name="email" id="email" placeholder="email">
+                    <label for="password">password:</label>
+                    <input type="text" name="password" id="password" placeholder="password">
+                    <button>Submit</button>
+                </form>
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jack M</td>
+                            <td>Here@there.com</td>
+                            <td>123</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </article>
+        </section>
+    </main>
+    <script defer>
+        const firstform = document.querySelector("#form")
+
+        const users = []
+
+        const createRow = (user) => {
+            const row = document.createElement("tr")
+            const nameCol = document.createElement("td")
+            const emailCol = document.createElement("td")
+            const passwordCol = document.createElement("td")
+
+            nameCol.textContent = user.name
+            emailCol.textContent = user.email
+            passwordCol.textContent = user.password
+
+            row.appendChild(nameCol)
+            row.appendChild(emailCol)
+            row.appendChild(passwordCol)
+
+            return row
+        }
+
+        const renderUsers = function(tableId) {
+            const table = document.querySelector(`#${tableId}`)
+
+            const row = users.map(user => {createRow(user)})
+
+            row.forEach(row => {
+                table.appendChild(row)
+            })
+        }
+
+        firstform.addEventListener("submit", (e) => {
+            e.preventDefault()
+            const {name, email, password} = e.target.elements
+            console.log(name.value,email.value,password.value)
+
+            users.push({
+                name: name.value,
+                email: email.value,
+                password: password.value
+            })
+
+            renderUsers("usersTable")
+
+            users.pop()
+
+        })
+    </script>
+</body>
+</html>
